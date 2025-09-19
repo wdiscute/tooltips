@@ -32,7 +32,6 @@ public class Tooltips
         NeoForge.EVENT_BUS.addListener(Tooltips::modifyItemTooltip);
         NeoForge.EVENT_BUS.addListener(Tooltips::renderFrame);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     @OnlyIn(Dist.CLIENT)
