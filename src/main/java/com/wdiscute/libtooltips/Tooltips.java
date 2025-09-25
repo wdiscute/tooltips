@@ -1,7 +1,10 @@
 package com.wdiscute.libtooltips;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -27,11 +30,18 @@ public class Tooltips
 
     public static float hue;
 
+    @OnlyIn(Dist.DEDICATED_SERVER)
+    public Tooltips()
+    {
+
+    }
+
+
+    @OnlyIn(Dist.CLIENT)
     public Tooltips(IEventBus modEventBus, ModContainer modContainer)
     {
         NeoForge.EVENT_BUS.addListener(Tooltips::modifyItemTooltip);
         NeoForge.EVENT_BUS.addListener(Tooltips::renderFrame);
-
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -39,6 +49,8 @@ public class Tooltips
     {
         Tooltips.hue += 0.001f;
     }
+
+
     public static void modifyItemTooltip(ItemTooltipEvent event)
     {
         List<Component> tooltipComponents = event.getToolTip();
