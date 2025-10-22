@@ -1,5 +1,15 @@
 {
   "tooltip.libtooltips.generic.shift_up": "⏬ §l§3[Shift]§r ⏬",
   "tooltip.libtooltips.generic.shift_down": "⏫ §l§6[Shift]§r ⏫",
-  "tooltip.libtooltips.generic.empty" : ""
+  "tooltip.libtooltips.generic.empty" : "",
+
+  "tooltip.minecraft.diamond.name" : "<rgb>Diamond!</rgb>",
+  "tooltip.minecraft.diamond.0" : "wow a fancy <rgb>description!</rgb> very <gradient-03>cool</gradient-30> description me thinks.",
+  "tooltip.minecraft.diamond.1" : "You can add <rgb>more lines</rgb> by just simply doing .1 .2 etc!",
+  "tooltip.minecraft.diamond.2" : "<gradient-30>You can define a gradient like this!</gradient-60>",
+  "tooltip.minecraft.diamond.3" : "The 30 and 60 refer to a scale from 00 to 99 for the hue.",
+  "tooltip.minecraft.diamond.4" : "",
+  "tooltip.minecraft.diamond.5" : "You can make a 'line break' by just leaving the translation empty like this.",
+
+  "tooltip.minecraft.diamond.7" : "skipping a number will stop the tooltip 'cycle', so don't do that. this text will never be rendered"
 }
