@@ -59,9 +59,8 @@ public class Tooltips
 
         if (I18n.exists(baseTooltip + ".name"))
         {
-            String s = I18n.get(baseTooltip + ".name");
             tooltipComponents.removeFirst();
-            tooltipComponents.addFirst(decodeTranslationKeyTags(s));
+            tooltipComponents.addFirst(decodeTranslationKey(baseTooltip + ".name"));
         }
 
         if (I18n.exists(baseTooltip + ".0"))
@@ -75,8 +74,7 @@ public class Tooltips
                 {
                     if (!I18n.exists(baseTooltip + "." + i))
                         break;
-                    String s = I18n.get(baseTooltip + "." + i);
-                    tooltipComponents.add(decodeTranslationKeyTags(s));
+                    tooltipComponents.add(decodeTranslationKey(baseTooltip + "." + i));
                 }
             }
             else
@@ -86,10 +84,15 @@ public class Tooltips
         }
     }
 
-    public static Component decodeTranslationKeyTags(String translationKey)
-    {
-        String s = I18n.get(translationKey);
 
+
+    public static Component decodeTranslationKey(String s)
+    {
+        return decodeString(I18n.get(s));
+    }
+
+    public static Component decodeString(String s)
+    {
         MutableComponent component = Component.empty();
 
         //transform all <rgb> and <gradient> into it's corresponding things
