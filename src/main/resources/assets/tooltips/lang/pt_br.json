@@ -1,0 +1,16 @@
+{
+  "tooltip.libtooltips.generic.shift_up": "⏬ §l§3[Shift]§r ⏬",
+  "tooltip.libtooltips.generic.shift_down": "⏫ §l§6[Shift]§r ⏫",
+  "tooltip.libtooltips.generic.empty" : "",
+
+  "tooltip.namespace.path.name" : "<rgb>Diamante!</rgb>",
+  "tooltip.namespace.path.0" : "uau uma <rgb>descrição!</rgb> chique muito <gradient-03>legal</gradient-30> eu acho.",
+  "tooltip.namespace.path.1" : "Você pode adicionar <rgb>mais linhas</rgb> simplesmente fazendo .1 .2 etc!",
+  "tooltip.namespace.path.2" : "<gradient-30>Você pode definir um gradiente assim!</gradient-60>",
+  "tooltip.namespace.path.3" : "O 30 e 60 referem-se a uma escala de 00 a 99 para o matiz.",
+  "tooltip.namespace.path.4" : "",
+  "tooltip.namespace.path.5" : "Você pode fazer uma 'quebra de linha' apenas deixando a tradução vazia assim.",
+
+  "tooltip.namespace.path.7" : "pular um número interromperá o 'ciclo' da tooltip, então não faça isso. este texto nunca será renderizado",
+  "tooltip.namespace.path.8" : "Isso funciona com qualquer item ou bloco, não apenas com seu mod ou vanilla!"
+}
