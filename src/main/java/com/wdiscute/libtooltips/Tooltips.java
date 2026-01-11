@@ -24,21 +24,13 @@ public class Tooltips
     public static final String MOD_ID = "libtooltips";
     public static float hue;
 
-    @OnlyIn(Dist.DEDICATED_SERVER)
-    public Tooltips()
-    {
 
-    }
-
-
-    @OnlyIn(Dist.CLIENT)
     public Tooltips(IEventBus modEventBus, ModContainer modContainer)
     {
         NeoForge.EVENT_BUS.addListener(Tooltips::modifyItemTooltip);
         NeoForge.EVENT_BUS.addListener(Tooltips::renderFrame);
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void renderFrame(RenderFrameEvent.Post event)
     {
         Tooltips.hue += 0.001f * event.getPartialTick().getRealtimeDeltaTicks() * 5;
