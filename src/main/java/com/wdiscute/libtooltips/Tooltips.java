@@ -18,11 +18,9 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import java.util.List;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Tooltips.MOD_ID)
 public class Tooltips
 {
-    // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "libtooltips";
     public static float hue;
 
@@ -38,13 +36,12 @@ public class Tooltips
     {
         NeoForge.EVENT_BUS.addListener(Tooltips::modifyItemTooltip);
         NeoForge.EVENT_BUS.addListener(Tooltips::renderFrame);
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void renderFrame(RenderFrameEvent.Post event)
     {
-        Tooltips.hue += 0.001f * event.getPartialTick().getRealtimeDeltaTicks() * Config.SPEED.get();
+        Tooltips.hue += 0.001f * event.getPartialTick().getRealtimeDeltaTicks() * 5;
     }
 
     public static void modifyItemTooltip(ItemTooltipEvent event)
@@ -56,11 +53,22 @@ public class Tooltips
         String namespace = rl.getNamespace();
         String path = rl.getPath();
         String baseTooltip = "tooltip." + namespace + "." + path;
+        String baseTooltipNoShift = "tooltip.always." + namespace + "." + path;
 
         if (I18n.exists(baseTooltip + ".name"))
         {
             tooltipComponents.removeFirst();
             tooltipComponents.addFirst(decodeTranslationKey(baseTooltip + ".name"));
+        }
+
+        if (I18n.exists(baseTooltipNoShift + ".0"))
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                if (!I18n.exists(baseTooltipNoShift + "." + i))
+                    break;
+                tooltipComponents.add(decodeTranslationKey(baseTooltipNoShift + "." + i));
+            }
         }
 
         if (I18n.exists(baseTooltip + ".0"))
@@ -76,14 +84,12 @@ public class Tooltips
                         break;
                     tooltipComponents.add(decodeTranslationKey(baseTooltip + "." + i));
                 }
-            }
-            else
+            } else
             {
                 tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_up"));
             }
         }
     }
-
 
 
     public static Component decodeTranslationKey(String s)
@@ -150,7 +156,7 @@ public class Tooltips
         return component;
     }
 
-        public static Component gradient(String text, float min, float max)
+    public static Component gradient(String text, float min, float max)
     {
         MutableComponent c = Component.empty();
 
