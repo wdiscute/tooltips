@@ -1,0 +1,9 @@
+{
+  "format_version": 1,
+  "effects": [
+    {
+      "type": "rainbow",
+      "params": {"f": 0.1, "w": 0.2}
+    }
+  ]
+}

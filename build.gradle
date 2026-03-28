@@ -23,6 +23,16 @@ repositories {
     maven {
         url = "https://maven.favouriteless.net/releases"
     }
+
+    //tyson the ember
+    repositories {
+        maven { url = 'https://maven.tysontheember.dev' }
+    }
+}
+
+dependencies {
+    //Embers Text API
+    implementation "net.tysontheember.emberstextapi:emberstextapi-neoforge-1.21.1:2.9.2"
 }
 
 publishing {
