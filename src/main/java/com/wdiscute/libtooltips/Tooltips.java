@@ -50,6 +50,7 @@ public class Tooltips
         String path = rl.getPath();
         String baseTooltip = "tooltip." + namespace + "." + path;
         String baseTooltipNoShift = "tooltip.always." + namespace + "." + path;
+        StringBuilder spaces = new StringBuilder().repeat(" ", Config.SPACES_BEFORE_TOOLTIP.get());
 
         if (I18n.exists(baseTooltipNoShift + ".0"))
         {
@@ -57,7 +58,7 @@ public class Tooltips
             {
                 if (!I18n.exists(baseTooltipNoShift + "." + i))
                     break;
-                tooltipComponents.add(Component.translatable(baseTooltipNoShift + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt())));
+                tooltipComponents.add(Component.literal(spaces.toString()).append(Component.translatable(baseTooltipNoShift + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
             }
         }
 
@@ -73,7 +74,7 @@ public class Tooltips
                 {
                     if (!I18n.exists(baseTooltip + "." + i))
                         break;
-                    tooltipComponents.add(Component.translatable(baseTooltip + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt())));
+                    tooltipComponents.add(Component.literal(spaces.toString()).append(Component.translatable(baseTooltip + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
                 }
 
                 if (Config.LINE_AFTER.getAsBoolean())
@@ -102,6 +103,11 @@ public class Tooltips
         public static final ModConfigSpec.IntValue DEFAULT_COLOR = BUILDER_CLIENT
                 .translation("libtooltips.configuration.default_color")
                 .defineInRange("default_color", 0x777777, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        public static final ModConfigSpec.IntValue SPACES_BEFORE_TOOLTIP = BUILDER_CLIENT
+                .translation("libtooltips.configuration.spaces_before_tooltip")
+                .defineInRange("spaces_before_tooltip", 2, 0, 10);
+
 
         static final ModConfigSpec SPEC = BUILDER_CLIENT.build();
 
