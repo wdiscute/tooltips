@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
     //Embers Text API
-    implementation "net.tysontheember.emberstextapi:emberstextapi-neoforge-1.21.1:2.9.3"
+    jarJar(implementation("net.tysontheember.emberstextapi:emberstextapi-neoforge-1.21.1:2.9.3"))
 }
 
 publishing {
