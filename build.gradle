@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
     //Embers Text API
-    implementation "net.tysontheember.emberstextapi:emberstextapi-neoforge-1.21.1:2.9.2"
+    implementation "net.tysontheember.emberstextapi:emberstextapi-neoforge-1.21.1:2.9.3"
 }
 
 publishing {
@@ -165,7 +165,6 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
     ]
     inputs.properties replaceProperties
     expand replaceProperties

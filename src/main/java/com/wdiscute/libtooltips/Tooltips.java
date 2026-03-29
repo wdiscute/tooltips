@@ -1,14 +1,14 @@
 package com.wdiscute.libtooltips;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.client.event.RenderFrameEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -16,11 +16,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.player.TradeWithVillagerEvent;
-import net.tysontheember.emberstextapi.EmbersTextAPI;
-import net.tysontheember.emberstextapi.immersivemessages.api.ImmersiveMessage;
-import net.tysontheember.emberstextapi.immersivemessages.api.MarkupParser;
-import net.tysontheember.emberstextapi.immersivemessages.api.TextSpan;
 
 import java.util.List;
 
@@ -33,6 +28,16 @@ public class Tooltips
     public Tooltips(IEventBus modEventBus, ModContainer modContainer)
     {
         NeoForge.EVENT_BUS.addListener(Tooltips::modifyItemTooltip);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.SPEC);
+    }
+
+    @Mod(value = MOD_ID, dist = Dist.CLIENT)
+    public static class Client
+    {
+        public Client(ModContainer modContainer)
+        {
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        }
     }
 
     public static void modifyItemTooltip(ItemTooltipEvent event)
@@ -52,7 +57,7 @@ public class Tooltips
             {
                 if (!I18n.exists(baseTooltipNoShift + "." + i))
                     break;
-                tooltipComponents.add(Component.translatable(baseTooltipNoShift + "." + i));
+                tooltipComponents.add(Component.translatable(baseTooltipNoShift + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt())));
             }
         }
 
@@ -61,18 +66,44 @@ public class Tooltips
             if (event.getFlags().hasShiftDown())
             {
                 tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_down"));
-                tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.empty"));
+                if (Config.LINE_BEFORE.getAsBoolean())
+                    tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.empty"));
 
                 for (int i = 0; i < 100; i++)
                 {
                     if (!I18n.exists(baseTooltip + "." + i))
                         break;
-                    tooltipComponents.add(Component.translatable(baseTooltip + "." + i));
+                    tooltipComponents.add(Component.translatable(baseTooltip + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt())));
                 }
-            } else
+
+                if (Config.LINE_AFTER.getAsBoolean())
+                    tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.empty"));
+
+            }
+            else
             {
                 tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_up"));
             }
         }
+    }
+
+    public static class Config
+    {
+        private static final ModConfigSpec.Builder BUILDER_CLIENT = new ModConfigSpec.Builder();
+
+        public static final ModConfigSpec.BooleanValue LINE_BEFORE = BUILDER_CLIENT
+                .translation("libtooltips.configuration.line_before")
+                .define("line_before", false);
+
+        public static final ModConfigSpec.BooleanValue LINE_AFTER = BUILDER_CLIENT
+                .translation("libtooltips.configuration.line_after")
+                .define("line_after", false);
+
+        public static final ModConfigSpec.IntValue DEFAULT_COLOR = BUILDER_CLIENT
+                .translation("libtooltips.configuration.default_color")
+                .defineInRange("default_color", 0x777777, Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+        static final ModConfigSpec SPEC = BUILDER_CLIENT.build();
+
     }
 }

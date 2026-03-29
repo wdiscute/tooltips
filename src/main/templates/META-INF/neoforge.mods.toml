@@ -9,7 +9,13 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="${mod_authors}"
-description='''${mod_description}'''
+description='''A Minecraft library that adds tooltips \nto items through translation keys and (a bit) more!
+
+Special text effects are powered by Ember's Text API.
+Documentation available at tysontheember.dev.
+Jar-in-jar inclusion has been explicitly approved for this mod.
+See Ember's Modding License for details.
+'''
 
 [[dependencies.${mod_id}]]
     modId="neoforge"
