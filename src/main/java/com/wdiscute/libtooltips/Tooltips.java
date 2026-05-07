@@ -2,7 +2,7 @@ package com.wdiscute.libtooltips;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.config.ModConfig;
@@ -45,7 +45,7 @@ public class Tooltips
         List<Component> tooltipComponents = event.getToolTip();
         ItemStack stack = event.getItemStack();
 
-        ResourceLocation rl = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Identifier rl = BuiltInRegistries.ITEM.getKey(stack.getItem());
         String namespace = rl.getNamespace();
         String path = rl.getPath();
         String baseTooltip = "tooltip." + namespace + "." + path;
