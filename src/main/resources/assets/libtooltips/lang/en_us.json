@@ -1,6 +1,6 @@
 {
-  "tooltip.libtooltips.generic.shift_up": "⏬ §l§3[Shift]§r ⏬",
-  "tooltip.libtooltips.generic.shift_down": "⏫ §l§6[Shift]§r ⏫",
+  "tooltip.libtooltips.generic.shift_up": "§7⏬ [Shift] ⏬",
+  "tooltip.libtooltips.generic.shift_down": "§7⏫ [Shift] ⏫",
   "tooltip.libtooltips.generic.empty" : "",
 
   "libtooltips.configuration.line_before" : "Empty line before",
