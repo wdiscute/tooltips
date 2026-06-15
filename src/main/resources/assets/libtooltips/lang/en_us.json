@@ -1,6 +1,6 @@
 {
-  "tooltip.libtooltips.generic.shift_up": "⏬ §l§3[Shift]§r ⏬",
-  "tooltip.libtooltips.generic.shift_down": "⏫ §l§6[Shift]§r ⏫",
+  "tooltip.libtooltips.generic.shift_up": "§7⏬ [Shift] ⏬",
+  "tooltip.libtooltips.generic.shift_down": "§7⏫ [Shift] ⏫",
   "tooltip.libtooltips.generic.empty" : "",
 
   "libtooltips.configuration.line_before" : "Empty line before",
@@ -9,13 +9,17 @@
   "libtooltips.configuration.line_after.tooltip" : "Adds an empty line AFTER the description",
   "libtooltips.configuration.default_color" : "Description Color",
   "libtooltips.configuration.default_color.tooltip" : "Which color to use as a base for the tooltip. The value is the color as an integer (use an online color picker)",
+  "libtooltips.configuration.spaces_before_tooltip.tooltip" : "How many spaces to place before the text of the tooltip",
+  "libtooltips.configuration.spaces_before_tooltip" : "Pre-tooltip spaces",
   "libtooltips.configuration.title" : "LibTooltip's Config",
 
-  "tooltip.namespace.path.0" : "wow a fancy <wave><rainbow>Glowing wavy rainbow!</rainbow></wave>",
-  "tooltip.namespace.path.1" : "You can add more lines by just simply doing .1 .2 etc!",
-  "tooltip.namespace.path.2" : "This library uses TysonTheEmber's awesome text API,",
-  "tooltip.namespace.path.3" : "meaning you can do lots of <grad hue=true from=330000 to=333300 f=0.3>Fancy Stuff!</grad>",
-  "tooltip.namespace.path.4" : "Check their docs at tysontheember.dev to learn more!",
+  "tooltip.namespace.path.0" : "Such a fancy <ltrgb>rgb rainbow</ltrgb> tooltip!",
+  "tooltip.namespace.path.1" : "And look, it even supports several lines, wow",
+  "tooltip.namespace.path.2" : "To prevent incompatibilities with other text processor APIs,",
+  "tooltip.namespace.path.3" : "it is recommended tags have a non-generic name such as 'ltrgb' instead of 'rgb'",
+  "tooltip.namespace.path.4" : "hide",
+  "tooltip.namespace.path.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
+  "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default.",
 
-  "tooltip.always.namespace.path.0" : "This tooltip will always show, even without shift being pressed!"
+  "tooltip.always.namespace.path.0" : "This tooltip will always show!"
 }
