@@ -2,6 +2,7 @@ package com.wdiscute.libtooltips;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 
@@ -22,7 +23,7 @@ public class ExampleRGBEffect
         for (int i = 0, len = text.length(); i < len; i++)
         {
             char c = text.charAt(i);
-            component.append(Component.literal(Character.toString(c)).withColor(getColorForIndex(i, time)));
+            component.append(Component.literal(Character.toString(c)).withStyle(Style.EMPTY.withColor(getColorForIndex(i, time))));
         }
 
         return component;

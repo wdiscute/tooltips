@@ -1,0 +1,33 @@
+modLoader="javafml" #mandatory
+
+loaderVersion="[2,]" #mandatory
+
+license="MIT"
+
+issueTrackerURL="https://discord.gg/WsuFsGSegD" #optional
+
+[[mods]] #mandatory
+modId="libtooltips"
+version="${mod_version}"
+displayName="${mod_name}"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/libtooltips"
+logoFile = "icon.png"
+mod_authors="${mod_authors}" #optional
+description='''A simple library to add tooltips to items'''
+
+[[mixins]]
+config="libtooltips.mixins.json"
+
+[[dependencies.libtooltips]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="${forge_version_range}" #mandatory
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.libtooltips]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
