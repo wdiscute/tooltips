@@ -1,8 +1,10 @@
 package com.wdiscute.libtooltips;
 
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.config.ModConfig;
@@ -16,14 +18,19 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.common.NeoForge;
+import org.apache.commons.lang3.function.TriFunction;
 
+import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Mod(Tooltips.MOD_ID)
 public class Tooltips
 {
     public static final String MOD_ID = "libtooltips";
-
 
     public Tooltips(IEventBus modEventBus, ModContainer modContainer)
     {
@@ -37,7 +44,83 @@ public class Tooltips
         public Client(ModContainer modContainer)
         {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+
+            registerProcessor("ltrgb", ExampleRGBEffect::process);
         }
+    }
+
+    private static final Pattern TAG_PATTERN = Pattern.compile("<([a-zA-Z0-9_]+)>(.*?)</\\1>", Pattern.DOTALL);
+
+    private static final Map<String, TriFunction<String, ItemStack, Entity, MutableComponent>> PROCESSORS = new HashMap<>();
+
+    public static void registerProcessor(String tag, TriFunction<String, ItemStack, Entity, MutableComponent> processor)
+    {
+        PROCESSORS.put(tag.toLowerCase(), processor);
+    }
+
+    public static boolean hasTags(String input)
+    {
+        Matcher matcher = TAG_PATTERN.matcher(input);
+
+
+        while (matcher.find())
+        {
+            String tag = matcher.group(1).toLowerCase();
+            var processor = PROCESSORS.get(tag);
+
+            if (processor != null)
+                return true;
+        }
+
+        return false;
+    }
+
+    public static MutableComponent resolveTagsToComponentFromTranslationKey(String translationKey, @Nullable ItemStack stack, @Nullable Entity entity)
+    {
+        return resolveTagsToComponent(I18n.get(translationKey), stack, entity);
+    }
+
+    public static MutableComponent resolveTagsToComponentFromTranslationKey(String translationKey)
+    {
+        return resolveTagsToComponent(I18n.get(translationKey), null, null);
+    }
+
+    public static MutableComponent resolveTagsToComponent(String input)
+    {
+        return resolveTagsToComponent(input, null, null);
+    }
+
+    public static MutableComponent resolveTagsToComponent(String input, @Nullable ItemStack stack, @Nullable Entity entity)
+    {
+        MutableComponent result = Component.empty();
+
+        Matcher matcher = TAG_PATTERN.matcher(input);
+
+        int lastEnd = 0;
+
+        while (matcher.find())
+        {
+
+            if (matcher.start() > lastEnd)
+                result.append(Component.literal(input.substring(lastEnd, matcher.start())));
+
+            String tag = matcher.group(1).toLowerCase();
+            String content = matcher.group(2);
+
+            var processor = PROCESSORS.get(tag);
+
+            if (processor != null)
+                result.append(processor.apply(content, stack, entity));
+            else
+                result.append(Component.literal(matcher.group()));
+
+            lastEnd = matcher.end();
+        }
+
+        if (lastEnd < input.length())
+            result.append(Component.literal(input.substring(lastEnd)));
+
+        return result;
     }
 
     public static void modifyItemTooltip(ItemTooltipEvent event)
@@ -58,7 +141,9 @@ public class Tooltips
             {
                 if (!I18n.exists(baseTooltipNoShift + "." + i))
                     break;
-                tooltipComponents.add(Component.literal(spaces.toString()).append(Component.translatable(baseTooltipNoShift + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
+                if(I18n.get(baseTooltipNoShift + "." + i).equals("hide"))
+                    break;
+                tooltipComponents.add(Component.literal(spaces.toString()).append(resolveTagsToComponentFromTranslationKey(baseTooltipNoShift + "." + i, stack, event.getEntity()).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
             }
         }
 
@@ -74,7 +159,10 @@ public class Tooltips
                 {
                     if (!I18n.exists(baseTooltip + "." + i))
                         break;
-                    tooltipComponents.add(Component.literal(spaces.toString()).append(Component.translatable(baseTooltip + "." + i).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
+                    if(I18n.get(baseTooltip + "." + i).equals("hide"))
+                        break;
+                    tooltipComponents.add(Component.literal(spaces.toString()).append(
+                            resolveTagsToComponentFromTranslationKey(baseTooltip + "." + i, stack, event.getEntity()).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
                 }
 
                 if (Config.LINE_AFTER.getAsBoolean())

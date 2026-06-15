@@ -17,6 +17,9 @@ Jar-in-jar inclusion has been explicitly approved for this mod.
 See Ember's Modding License for details.
 '''
 
+[[mixins]]
+config="libtooltips.mixins.json"
+
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
