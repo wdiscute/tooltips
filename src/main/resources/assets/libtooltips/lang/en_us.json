@@ -11,13 +11,13 @@
   "libtooltips.configuration.default_color.tooltip" : "Which color to use as a base for the tooltip. The value is the color as an integer (use an online color picker)",
   "libtooltips.configuration.title" : "LibTooltip's Config",
 
-  "tooltip.minecraft.diamond.0" : "Such a fancy <ltrgb>rgb rainbow</ltrgb> tooltip!",
-  "tooltip.minecraft.diamond.1" : "And look, it even supports several lines, wow",
-  "tooltip.minecraft.diamond.2" : "To prevent incompatibilities with other text processor APIs,",
-  "tooltip.minecraft.diamond.3" : "it is recommended tags have a non-generic name such as 'ltrgb' instead of 'rgb'",
-  "tooltip.minecraft.diamond.4" : "hide",
-  "tooltip.minecraft.diamond.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
-  "tooltip.minecraft.diamond.6" : "This is useful for translations where different languages might have less lines than the default.",
+  "tooltip.namespace.path.0" : "Such a fancy <ltrgb>rgb rainbow</ltrgb> tooltip!",
+  "tooltip.namespace.path.1" : "And look, it even supports several lines, wow",
+  "tooltip.namespace.path.2" : "To prevent incompatibilities with other text processor APIs,",
+  "tooltip.namespace.path.3" : "it is recommended tags have a non-generic name such as 'ltrgb' instead of 'rgb'",
+  "tooltip.namespace.path.4" : "hide",
+  "tooltip.namespace.path.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
+  "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default.",
 
-  "tooltip.always.minecraft.gold_ingot.0" : "This tooltip will always show!"
+  "tooltip.always.namespace.path.0" : "This tooltip will always show!"
 }
