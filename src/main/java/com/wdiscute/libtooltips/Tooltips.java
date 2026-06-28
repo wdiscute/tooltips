@@ -47,7 +47,8 @@ public class Tooltips
     @Mod(value = MOD_ID, dist = Dist.CLIENT)
     public static class Client
     {
-        public static final KeyMapping EXPAND = new KeyMapping("key.libtooltips.expand", GLFW.GLFW_KEY_LEFT_SHIFT, "key.category.libtooltips.libtooltips");
+        public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(Identifier.fromNamespaceAndPath("libtooltips", "libtooltips"));
+        public static final KeyMapping EXPAND = new KeyMapping("key.libtooltips.expand", GLFW.GLFW_KEY_LEFT_SHIFT, CATEGORY);
 
         public Client(ModContainer modContainer, IEventBus bus)
         {
@@ -167,7 +168,7 @@ public class Tooltips
 
         if (I18n.exists(baseTooltip + ".0"))
         {
-            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), Client.EXPAND.getKey().getValue());
+            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), Client.EXPAND.getKey().getValue());
             if (shift)
             {
                 tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));

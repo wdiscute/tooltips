@@ -14,8 +14,6 @@
   "libtooltips.configuration.line_after.tooltip" : "Adds an empty line AFTER the description",
   "libtooltips.configuration.default_color" : "Description Color",
   "libtooltips.configuration.default_color.tooltip" : "Which color to use as a base for the tooltip. The value is the color as an integer (use an online color picker)",
-  "libtooltips.configuration.spaces_before_tooltip.tooltip" : "How many spaces to place before the text of the tooltip",
-  "libtooltips.configuration.spaces_before_tooltip" : "Pre-tooltip spaces",
   "libtooltips.configuration.title" : "LibTooltip's Config",
 
   "tooltip.namespace.path.0" : "Such a fancy <ltrgb>rgb rainbow</ltrgb> tooltip!",
@@ -26,5 +24,6 @@
   "tooltip.namespace.path.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
   "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default.",
 
-  "tooltip.always.namespace.path.0" : "This tooltip will always show!"
+  "tooltip.always.namespace.path.0" : "This tooltip will always show!",
+  "tooltip.minecraft.diamond.0" : "<ltcolor>c=AA0000;c=FFAA00;c=FF55FF;c=FFFF55;c=00AA00;c=00AAAA;c=AA00AA;c=FF55FF;Galaxy Sword</ltcolor>"
 }
