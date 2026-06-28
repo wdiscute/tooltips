@@ -22,7 +22,5 @@
   "tooltip.namespace.path.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
   "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default.",
 
-  "tooltip.always.namespace.path.0" : "This tooltip will always show!",
-
-  "tooltip.minecraft.diamond.0" : "test tooltip"
+  "tooltip.always.namespace.path.0" : "This tooltip will always show!"
 }
