@@ -1,5 +1,8 @@
 package com.wdiscute.libtooltips;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -8,8 +11,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,6 +24,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.common.NeoForge;
 import org.apache.commons.lang3.function.TriFunction;
+import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -41,13 +47,25 @@ public class Tooltips
     @Mod(value = MOD_ID, dist = Dist.CLIENT)
     public static class Client
     {
-        public Client(ModContainer modContainer)
+        public static final KeyMapping EXPAND = new KeyMapping("key.libtooltips.expand", GLFW.GLFW_KEY_LEFT_SHIFT, "key.category.libtooltips.libtooltips");
+
+        public Client(ModContainer modContainer, IEventBus bus)
         {
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
-            registerProcessor("ltrgb", ExampleRGBEffect::process);
+            bus.addListener(Client::registerKeybinds);
+
+            registerProcessor("ltkeybind", KeybindProcessor::process);
+            registerProcessor("ltrgb", RGBEffect::process);
+            registerProcessor("ltcolor", ColorEffect::process);
+        }
+
+        public static void registerKeybinds(RegisterKeyMappingsEvent event)
+        {
+            event.register(Client.EXPAND);
         }
     }
+
 
     private static final Pattern TAG_PATTERN = Pattern.compile("<([a-zA-Z0-9_]+)>(.*?)</\\1>", Pattern.DOTALL);
 
@@ -141,7 +159,7 @@ public class Tooltips
             {
                 if (!I18n.exists(baseTooltipNoShift + "." + i))
                     break;
-                if(I18n.get(baseTooltipNoShift + "." + i).equals("hide"))
+                if (I18n.get(baseTooltipNoShift + "." + i).equals("hide"))
                     break;
                 tooltipComponents.add(Component.literal(spaces.toString()).append(resolveTagsToComponentFromTranslationKey(baseTooltipNoShift + "." + i, stack, event.getEntity()).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
             }
@@ -149,9 +167,10 @@ public class Tooltips
 
         if (I18n.exists(baseTooltip + ".0"))
         {
-            if (event.getFlags().hasShiftDown())
+            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), Client.EXPAND.getKey().getValue());
+            if (shift)
             {
-                tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_down"));
+                tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
                 if (Config.LINE_BEFORE.getAsBoolean())
                     tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.empty"));
 
@@ -159,7 +178,7 @@ public class Tooltips
                 {
                     if (!I18n.exists(baseTooltip + "." + i))
                         break;
-                    if(I18n.get(baseTooltip + "." + i).equals("hide"))
+                    if (I18n.get(baseTooltip + "." + i).equals("hide"))
                         break;
                     tooltipComponents.add(Component.literal(spaces.toString()).append(
                             resolveTagsToComponentFromTranslationKey(baseTooltip + "." + i, stack, event.getEntity()).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
@@ -171,7 +190,7 @@ public class Tooltips
             }
             else
             {
-                tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_up"));
+                tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_up"));
             }
         }
     }
