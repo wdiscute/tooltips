@@ -1,10 +1,15 @@
 {
-  "tooltip.libtooltips.generic.shift_up": "§7⏬ [Shift] ⏬",
-  "tooltip.libtooltips.generic.shift_down": "§7⏫ [Shift] ⏫",
+  "tooltip.libtooltips.generic.shift_up": "§7⏬ [<ltkeybind>keybind=key.libtooltips.expand;§7</ltkeybind>§7] ⏬",
+  "tooltip.libtooltips.generic.shift_down": "§7⏫ [<ltkeybind>keybind=key.libtooltips.expand;§7</ltkeybind>§7] ⏫",
   "tooltip.libtooltips.generic.empty" : "",
+
+  "key.category.libtooltips.libtooltips": "LibTooltips",
+  "key.libtooltips.expand": "Expand Tooltip",
 
   "libtooltips.configuration.line_before" : "Empty line before",
   "libtooltips.configuration.line_before.tooltip" : "Adds an empty line BEFORE the description, AFTER the [shift]",
+  "libtooltips.configuration.spaces_before_tooltip" : "Spaces before tooltip",
+  "libtooltips.configuration.spaces_before_tooltip.tooltip" : "Adds X spaces BEFORE the tooltip text",
   "libtooltips.configuration.line_after" : "Empty line after",
   "libtooltips.configuration.line_after.tooltip" : "Adds an empty line AFTER the description",
   "libtooltips.configuration.default_color" : "Description Color",
