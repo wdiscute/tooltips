@@ -1,6 +1,5 @@
 package com.wdiscute.libtooltips;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,13 +12,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.commons.lang3.function.TriFunction;
 
 import javax.annotation.Nullable;
@@ -48,7 +45,8 @@ public class Tooltips
     {
         public static void init()
         {
-            registerProcessor("ltrgb", ExampleRGBEffect::process);
+            registerProcessor("ltrgb", RGBEffect::process);
+            registerProcessor("ltcolor", ColorEffect::process);
         }
     }
 
@@ -103,7 +101,6 @@ public class Tooltips
 
         while (matcher.find())
         {
-
             if (matcher.start() > lastEnd)
                 result.append(Component.literal(input.substring(lastEnd, matcher.start())));
 
