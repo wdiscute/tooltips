@@ -1,7 +1,10 @@
 {
-  "tooltip.libtooltips.generic.shift_up": "§7⏬ [Shift] ⏬",
-  "tooltip.libtooltips.generic.shift_down": "§7⏫ [Shift] ⏫",
+  "tooltip.libtooltips.generic.shift_up": "§7⏬ [<ltkeybind>keybind=key.libtooltips.expand;§7</ltkeybind>§7] ⏬",
+  "tooltip.libtooltips.generic.shift_down": "§7⏫ [<ltkeybind>keybind=key.libtooltips.expand;§7</ltkeybind>§7] ⏫",
   "tooltip.libtooltips.generic.empty" : "",
+
+  "key.category.libtooltips.libtooltips": "LibTooltips",
+  "key.libtooltips.expand": "Expand Tooltip",
 
   "libtooltips.configuration.line_before" : "Empty line before",
   "libtooltips.configuration.line_before.tooltip" : "Adds an empty line BEFORE the description, AFTER the [shift]",
@@ -19,5 +22,7 @@
   "tooltip.namespace.path.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
   "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default.",
 
-  "tooltip.always.namespace.path.0" : "This tooltip will always show!"
+  "tooltip.always.namespace.path.0" : "This tooltip will always show!",
+
+  "tooltip.minecraft.diamond.0" : "test tooltip"
 }

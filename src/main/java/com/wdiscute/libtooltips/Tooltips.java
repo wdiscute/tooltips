@@ -1,5 +1,8 @@
 package com.wdiscute.libtooltips;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.MutableComponent;
@@ -10,6 +13,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,6 +22,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.function.TriFunction;
+import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -25,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static net.minecraftforge.versions.forge.ForgeVersion.MOD_ID;
 
 @Mod(Tooltips.MOD_ID)
 public class Tooltips
@@ -45,8 +52,31 @@ public class Tooltips
     {
         public static void init()
         {
+            registerProcessor("ltkeybind", KeybindProcessor::process);
             registerProcessor("ltrgb", RGBEffect::process);
             registerProcessor("ltcolor", ColorEffect::process);
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+    public static class ClientForgeEvents
+    {
+        @SubscribeEvent
+        public static void onItemTooltip(ItemTooltipEvent event)
+        {
+            modifyItemTooltip(event);
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents
+    {
+        public static final KeyMapping EXPAND = new KeyMapping("key.libtooltips.expand", GLFW.GLFW_KEY_LEFT_SHIFT, "key.category.libtooltips.libtooltips");
+
+        @SubscribeEvent
+        public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event)
+        {
+            event.register(EXPAND);
         }
     }
 
@@ -62,7 +92,6 @@ public class Tooltips
     public static boolean hasTags(String input)
     {
         Matcher matcher = TAG_PATTERN.matcher(input);
-
 
         while (matcher.find())
         {
@@ -123,16 +152,6 @@ public class Tooltips
         return result;
     }
 
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-    public static class ClientForgeEvents
-    {
-        @SubscribeEvent
-        public static void onItemTooltip(ItemTooltipEvent event)
-        {
-            modifyItemTooltip(event);
-        }
-    }
-
     public static void modifyItemTooltip(ItemTooltipEvent event)
     {
         List<Component> tooltipComponents = event.getToolTip();
@@ -159,9 +178,10 @@ public class Tooltips
 
         if (I18n.exists(baseTooltip + ".0"))
         {
-            if (Screen.hasShiftDown())
+            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), ClientModEvents.EXPAND.getKey().getValue());
+            if (shift)
             {
-                tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_down"));
+                tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
                 if (Config.LINE_BEFORE.get())
                     tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.empty"));
 
@@ -181,7 +201,7 @@ public class Tooltips
             }
             else
             {
-                tooltipComponents.add(Component.translatable("tooltip.libtooltips.generic.shift_up"));
+                tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_up"));
             }
         }
     }
