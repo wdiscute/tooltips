@@ -283,8 +283,8 @@ public class Tooltips
         private static final ModConfigSpec.Builder BUILDER_CLIENT = new ModConfigSpec.Builder();
 
         public static final ModConfigSpec.BooleanValue ENABLE_TOOLTIPS = BUILDER_CLIENT
-                .translation("libtooltips.configuration.disable_tooltips")
-                .define("disable_tooltips", true);
+                .translation("libtooltips.configuration.enable_tooltips")
+                .define("enable_tooltips", true);
 
         public static final ModConfigSpec.BooleanValue LINE_BEFORE = BUILDER_CLIENT
                 .translation("libtooltips.configuration.line_before")
