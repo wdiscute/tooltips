@@ -63,6 +63,8 @@ public class Tooltips
             registerProcessor("ltkeybind", KeybindProcessor::process);
             registerProcessor("ltrgb", RGBEffect::process);
             registerProcessor("ltcolor", ColorEffect::process);
+            registerProcessor("ltbob", BobEffect::process);
+            registerProcessor("ltrotate", RotateEffect::process);
         }
 
         public static void registerKeybinds(RegisterKeyMappingsEvent event)
