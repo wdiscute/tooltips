@@ -22,8 +22,5 @@
   "tooltip.namespace.path.3" : "it is recommended tags have a non-generic name such as 'ltrgb' instead of 'rgb'",
   "tooltip.namespace.path.4" : "hide",
   "tooltip.namespace.path.5" : "Setting a line as 'hide' will stop the rest of the lines from displaying.",
-  "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default.",
-
-  "tooltip.always.namespace.path.0" : "This tooltip will always show!",
-  "tooltip.minecraft.diamond.0" : "<ltcolor>c=AA0000;c=FFAA00;c=FF55FF;c=FFFF55;c=00AA00;c=00AAAA;c=AA00AA;c=FF55FF;Galaxy Sword</ltcolor>"
+  "tooltip.namespace.path.6" : "This is useful for translations where different languages might have less lines than the default."
 }
