@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
@@ -14,7 +15,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -153,20 +153,22 @@ public class Tooltips
         String baseTooltip = "tooltip." + namespace + "." + path;
         String baseTooltipNoShift = "tooltip.always." + namespace + "." + path;
         StringBuilder spaces = new StringBuilder().repeat(" ", Config.SPACES_BEFORE_TOOLTIP.get());
+        Map<String, String> i18n = Language.getInstance().getLanguageData();
 
-        if (I18n.exists(baseTooltipNoShift + ".0"))
+        if (i18n.get(baseTooltipNoShift + ".0") != null)
         {
             for (int i = 0; i < 100; i++)
             {
-                if (!I18n.exists(baseTooltipNoShift + "." + i))
+                if (i18n.get(baseTooltipNoShift + "." + i) == null)
                     break;
+
                 if (I18n.get(baseTooltipNoShift + "." + i).equals("hide"))
                     break;
                 tooltipComponents.add(Component.literal(spaces.toString()).append(resolveTagsToComponentFromTranslationKey(baseTooltipNoShift + "." + i, stack, event.getEntity()).withStyle(Style.EMPTY.withColor(Config.DEFAULT_COLOR.getAsInt()))));
             }
         }
 
-        if (I18n.exists(baseTooltip + ".0"))
+        if (i18n.get(baseTooltip + ".0") != null)
         {
             boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), Client.EXPAND.getKey().getValue());
             if (shift)
@@ -177,7 +179,7 @@ public class Tooltips
 
                 for (int i = 0; i < 100; i++)
                 {
-                    if (!I18n.exists(baseTooltip + "." + i))
+                    if (i18n.get(baseTooltip + "." + i) == null)
                         break;
                     if (I18n.get(baseTooltip + "." + i).equals("hide"))
                         break;
