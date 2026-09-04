@@ -6,6 +6,7 @@
   "key.category.libtooltips.libtooltips": "LibTooltips",
   "key.libtooltips.expand": "Expand Tooltip",
 
+  "libtooltips.configuration.enable_tooltips" : "Enable Tooltips",
   "libtooltips.configuration.line_before" : "Empty line before",
   "libtooltips.configuration.line_before.tooltip" : "Adds an empty line BEFORE the description, AFTER the [shift]",
   "libtooltips.configuration.spaces_before_tooltip" : "Spaces before tooltip",
