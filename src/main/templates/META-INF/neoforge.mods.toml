@@ -7,6 +7,8 @@ license="${mod_license}"
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
+iconFile = "icon.png"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/libtooltips"
 displayName="${mod_name}"
 authors="${mod_authors}"
 description='''A Minecraft library that adds tooltips \nto items through translation keys and (a bit) more!
