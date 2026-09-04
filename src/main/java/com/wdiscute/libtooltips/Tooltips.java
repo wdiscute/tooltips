@@ -43,8 +43,9 @@ public class Tooltips
 {
     public static final String MOD_ID = "libtooltips";
 
-    public Tooltips(IEventBus modEventBus, ModContainer modContainer)
+    public Tooltips(IEventBus eventBus, ModContainer modContainer)
     {
+        DATA_COMPONENT_TYPES.register(eventBus);
         NeoForge.EVENT_BUS.addListener(Tooltips::modifyItemTooltip);
         modContainer.registerConfig(ModConfig.Type.CLIENT, Config.SPEC);
     }
