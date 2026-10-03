@@ -29,7 +29,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.apache.commons.lang3.function.TriFunction;
-import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -54,7 +53,7 @@ public class Tooltips
     public static class Client
     {
         public static final KeyMapping.Category CATEGORY = new KeyMapping.Category(Identifier.fromNamespaceAndPath("libtooltips", "libtooltips"));
-        public static final KeyMapping EXPAND = new KeyMapping("key.libtooltips.expand", GLFW.GLFW_KEY_LEFT_SHIFT, CATEGORY);
+        public static final KeyMapping EXPAND = new KeyMapping("key.libtooltips.expand", InputConstants.KEY_LSHIFT, CATEGORY);
 
         public Client(ModContainer modContainer, IEventBus bus)
         {
@@ -237,7 +236,7 @@ public class Tooltips
         //shift tooltips
         if (Language.getInstance().getLanguageData().get(baseTooltip + ".0") != null || !compShift.isEmpty() || !interfaceShift.isEmpty())
         {
-            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), Client.EXPAND.getKey().getValue());
+            boolean shift = InputConstants.isKeyDown(Client.EXPAND.getKey().getValue());
             if (shift)
             {
                 tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
