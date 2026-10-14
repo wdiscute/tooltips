@@ -236,7 +236,8 @@ public class Tooltips
         //shift tooltips
         if (I18n.exists(baseTooltip + ".0") || !compShift.isEmpty() || !interfaceShift.isEmpty())
         {
-            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), Client.EXPAND.getKey().getValue());
+            int value = Client.EXPAND.getKey().getValue();
+            boolean shift = value != -1 && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), value);
             if (shift)
             {
                 tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
