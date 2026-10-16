@@ -17,7 +17,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import net.neoforged.neoforge.client.settings.IKeyConflictContext;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -237,7 +236,8 @@ public class Tooltips
         //shift tooltips
         if (I18n.exists(baseTooltip + ".0") || !compShift.isEmpty() || !interfaceShift.isEmpty())
         {
-            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), Client.EXPAND.getKey().getValue());
+            int value = Client.EXPAND.getKey().getValue();
+            boolean shift = value != -1 && InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), value);
             if (shift)
             {
                 tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
