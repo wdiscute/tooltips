@@ -217,7 +217,8 @@ public class Tooltips
         //shift tooltips
         if (I18n.exists(baseTooltip + ".0") || !interfaceShift.isEmpty())
         {
-            boolean shift = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), ClientModEvents.EXPAND.getKey().getValue());
+            int value = ClientModEvents.EXPAND.getKey().getValue();
+            boolean shift = value != -1 && InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), value);
             if (shift)
             {
                 tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
@@ -264,9 +265,8 @@ public class Tooltips
         private static final ForgeConfigSpec.Builder BUILDER_CLIENT = new ForgeConfigSpec.Builder();
 
         public static final ForgeConfigSpec.BooleanValue ENABLE_TOOLTIPS = BUILDER_CLIENT
-                .translation("libtooltips.configuration.disable_tooltips")
-                .define("disable_tooltips", true);
-
+                .translation("libtooltips.configuration.enable_tooltips")
+                .define("enable_tooltips", true);
 
         public static final ForgeConfigSpec.BooleanValue LINE_BEFORE = BUILDER_CLIENT
                 .translation("libtooltips.configuration.line_before")
@@ -283,7 +283,6 @@ public class Tooltips
         public static final ForgeConfigSpec.IntValue SPACES_BEFORE_TOOLTIP = BUILDER_CLIENT
                 .translation("libtooltips.configuration.spaces_before_tooltip")
                 .defineInRange("spaces_before_tooltip", 2, 0, 10);
-
 
         static final ForgeConfigSpec SPEC = BUILDER_CLIENT.build();
 
