@@ -236,7 +236,9 @@ public class Tooltips
         //shift tooltips
         if (Language.getInstance().getLanguageData().get(baseTooltip + ".0") != null || !compShift.isEmpty() || !interfaceShift.isEmpty())
         {
-            boolean shift = InputConstants.isKeyDown(Client.EXPAND.getKey().getValue());
+            InputConstants.Key key = Client.EXPAND.getKey();
+            int value = key.getValue();
+            boolean shift = value != -1 && InputConstants.isKeyDown(value);
             if (shift)
             {
                 tooltipComponents.add(resolveTagsToComponentFromTranslationKey("tooltip.libtooltips.generic.shift_down"));
