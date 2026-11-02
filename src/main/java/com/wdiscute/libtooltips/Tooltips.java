@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
@@ -31,9 +32,9 @@ import org.apache.commons.lang3.function.TriFunction;
 import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +64,7 @@ public class Tooltips
             registerProcessor("ltkeybind", KeybindProcessor::process);
             registerProcessor("ltrgb", RGBEffect::process);
             registerProcessor("ltcolor", ColorEffect::process);
+            registerProcessor("ltlangkey", LangKey::process);
         }
 
         public static void registerKeybinds(RegisterKeyMappingsEvent event)
@@ -93,11 +95,9 @@ public class Tooltips
             .register("tooltip_always", () -> new DataComponentType.Builder<List<String>>().persistent(Codec.STRING.listOf()).build());
 
 
-
-
     private static final Pattern TAG_PATTERN = Pattern.compile("<([a-zA-Z0-9_]+)>(.*?)</\\1>", Pattern.DOTALL);
 
-    private static final Map<String, TriFunction<String, ItemStack, Entity, MutableComponent>> PROCESSORS = new HashMap<>();
+    private static final Map<String, TriFunction<String, ItemStack, Entity, MutableComponent>> PROCESSORS = new ConcurrentHashMap<>();
 
     public static void registerProcessor(String tag, TriFunction<String, ItemStack, Entity, MutableComponent> processor)
     {
@@ -177,7 +177,8 @@ public class Tooltips
      */
     public static void modifyItemTooltip(ItemTooltipEvent event)
     {
-        if (!Config.ENABLE_TOOLTIPS.get()) return;
+        if (FMLLoader.getDist().isClient())
+            if (!Config.ENABLE_TOOLTIPS.get()) return;
 
         List<Component> tooltipComponents = event.getToolTip();
         ItemStack stack = event.getItemStack();
