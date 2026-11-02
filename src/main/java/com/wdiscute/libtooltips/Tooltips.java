@@ -34,6 +34,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +64,7 @@ public class Tooltips
             registerProcessor("ltkeybind", KeybindProcessor::process);
             registerProcessor("ltrgb", RGBEffect::process);
             registerProcessor("ltcolor", ColorEffect::process);
+            registerProcessor("ltlangkey", LangKey::process);
         }
 
         public static void registerKeybinds(RegisterKeyMappingsEvent event)
@@ -97,7 +99,7 @@ public class Tooltips
 
     private static final Pattern TAG_PATTERN = Pattern.compile("<([a-zA-Z0-9_]+)>(.*?)</\\1>", Pattern.DOTALL);
 
-    private static final Map<String, TriFunction<String, ItemStack, Entity, MutableComponent>> PROCESSORS = new HashMap<>();
+    private static final Map<String, TriFunction<String, ItemStack, Entity, MutableComponent>> PROCESSORS = new ConcurrentHashMap<>();
 
     public static void registerProcessor(String tag, TriFunction<String, ItemStack, Entity, MutableComponent> processor)
     {
