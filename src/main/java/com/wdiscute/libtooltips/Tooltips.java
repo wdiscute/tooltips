@@ -177,8 +177,11 @@ public class Tooltips
      */
     public static void modifyItemTooltip(ItemTooltipEvent event)
     {
-        if (FMLLoader.getDist().isClient())
-            if (!Config.ENABLE_TOOLTIPS.get()) return;
+        if (!FMLLoader.getDist().isClient())
+            return;
+
+        if (!Config.ENABLE_TOOLTIPS.get())
+            return;
 
         List<Component> tooltipComponents = event.getToolTip();
         ItemStack stack = event.getItemStack();
